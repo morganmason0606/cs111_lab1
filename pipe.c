@@ -14,6 +14,10 @@ int main(int argc, char *argv[])
 	pid_t cpid;
 	int wstatus;
 
+	if(argc == 1){
+		exit(EINVAL);
+	}
+
 	for(int i = 1; i < argc; i++){
 		
 		if(pipe(fds[i]) == -1){
@@ -39,7 +43,6 @@ int main(int argc, char *argv[])
 			close(fds[i][0]);
 
 			execlp(argv[i],argv[i],NULL);
-			perror("child failed()");
 			exit(EXIT_FAILURE);
 		}else{
 			close(fds[i][1]);
